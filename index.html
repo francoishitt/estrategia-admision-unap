@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admisión UNAP - Hitler Vásquez</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      /* === PALETA (FONDO BLANCO + MORADO) === */
+      --bg: #fbf8ff;
+      --text:#1b102a;
+      --muted:#4b3b66;
+
+      /* MORADO (bordes como tu imagen) */
+      --pm:#7C3AED;
+      --pmGlow: rgba(124,58,237,.25);
+      --pmGlow2: rgba(124,58,237,.12);
+
+      /* Bordes estilo “recuadro morado” */
+      --bRadius: 20px;
+      --bWidth: 3px;
+      --bHalo1: 6px;
+      --bHalo2: 12px;
+
+      --shadowSoft: 0 18px 40px rgba(27,16,42,.10);
+      --ok:#16a34a;
+      --warn:#d97706;
+      --bad:#dc2626;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(900px 600px at 15% 0%, rgba(124,58,237,.12), transparent 55%),
+        radial-gradient(900px 600px at 95% 10%, rgba(124,58,237,.08), transparent 60%),
+        radial-gradient(900px 600px at 50% 110%, rgba(124,58,237,.06), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.35;
+    }
+
+    /* ====== BORDE UNIVERSAL “COMO LA IMAGEN” ====== */
+    .pm-border{
+      border-radius: var(--bRadius);
+      border: var(--bWidth) solid var(--pm);
+      background:#fff;
+      box-shadow:
+        0 0 0 var(--bHalo1) var(--pmGlow),
+        0 0 0 var(--bHalo2) var(--pmGlow2),
+        var(--shadowSoft);
+    }
+
+    header{
+      padding:22px 16px 10px;
+      max-width:1180px;
+      margin:0 auto;
+    }
+    h1{
+      font-size: clamp(18px, 2.4vw, 30px);
+      margin:0 0 8px;
+      letter-spacing:.2px;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0;
+      font-size:13.5px;
+    }
+
+    /* ===== HERO (foto + mensaje arriba) ===== */
+    .hero{
+      margin-top:14px;
+      padding:14px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .hero-left{
+      min-width:260px;
+      flex:1;
+    }
+    .hero-badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border: var(--bWidth) solid var(--pm);
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 2px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 6px) rgba(124,58,237,.10);
+      background:#fff;
+      font-weight:850;
+      color:var(--text);
+      font-size:12.5px;
+      margin-bottom:10px;
+    }
+    .hero-title{
+      margin:0 0 6px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .hero-text{
+      margin:0;
+      color:var(--muted);
+      max-width:760px;
+    }
+    .hero-right{
+      width:220px;
+      max-width:220px;
+      flex:0 0 auto;
+    }
+    .hero-right img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius: var(--bRadius);
+      border: var(--bWidth) solid var(--pm);
+      background:#fff;
+      box-shadow:
+        0 0 0 var(--bHalo1) var(--pmGlow),
+        0 0 0 var(--bHalo2) var(--pmGlow2);
+      object-fit:cover;
+    }
+    .hero-note{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:8px;
+    }
+
+    /* ===== LAYOUT ===== */
+    main{
+      max-width:1180px;
+      margin:0 auto;
+      padding: 10px 16px 26px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+    }
+
+    /* ===== Cards ===== */
+    .card{ padding:0; }
+    .card.pm-border{ overflow:hidden; }
+    .card .hd{
+      padding:12px 14px;
+      border-bottom: 2px solid rgba(124,58,237,.25);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background: linear-gradient(180deg, rgba(124,58,237,.06), rgba(255,255,255,1));
+    }
+    .card .bd{ padding:14px; }
+
+    .tag{
+      font-size:12px;
+      padding:7px 12px;
+      border-radius:999px;
+      border: var(--bWidth) solid var(--pm);
+      background:#fff;
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 3px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 7px) rgba(124,58,237,.10);
+      color:var(--muted);
+      white-space:nowrap;
+      font-weight:800;
+    }
+
+    .row{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end;
+    }
+    label{ font-size:13px; color:var(--muted); }
+
+    /* Inputs con borde morado */
+    select, input[type="number"], input[type="text"]{
+      background:#fff;
+      border: var(--bWidth) solid var(--pm);
+      color:var(--text);
+      border-radius: var(--bRadius);
+      padding:10px 12px;
+      outline:none;
+      min-width: 220px;
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 3px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 7px) rgba(124,58,237,.10);
+    }
+    input[type="number"]{ min-width: 130px; }
+    input[type="text"]{ min-width: 260px; }
+    select:focus, input:focus{
+      box-shadow:
+        0 0 0 var(--bHalo1) rgba(124,58,237,.35),
+        0 0 0 var(--bHalo2) rgba(124,58,237,.18);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 720px){
+      .grid2{grid-template-columns:1fr}
+      input[type="text"], select{ min-width: 220px; }
+      .hero-right{ width:180px; max-width:180px; }
+    }
+
+    /* Boxes internas con el mismo borde */
+    .areaBox{
+      padding:12px;
+    }
+
+    .areaTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:6px;
+    }
+    .areaName{
+      font-weight:950;
+      letter-spacing:.2px;
+      margin:0;
+      font-size:14px;
+    }
+    .areaDesc{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: normal;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      font-size:13px;
+      border-radius: var(--bRadius);
+      overflow:hidden;
+    }
+    th, td{
+      padding:10px 8px;
+      border-bottom: 2px solid rgba(124,58,237,.15);
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      color: var(--text);
+      font-weight:950;
+      background: rgba(124,58,237,.07);
+    }
+    .num{ text-align:right; font-variant-numeric: tabular-nums; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      border: var(--bWidth) solid var(--pm);
+      padding:7px 10px;
+      background:#fff;
+      color:var(--muted);
+      font-size:12px;
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 3px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 7px) rgba(124,58,237,.10);
+    }
+    .legendDot{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--pm);
+      display:inline-block;
+      border:1px solid rgba(0,0,0,.06);
+    }
+
+    .btns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    button{
+      cursor:pointer;
+      border: var(--bWidth) solid var(--pm);
+      border-radius: var(--bRadius);
+      padding:10px 12px;
+      background:#fff;
+      color: var(--text);
+      font-weight:950;
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 3px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 7px) rgba(124,58,237,.10);
+    }
+    button:hover{ background: rgba(124,58,237,.06); }
+    .toggle button[aria-pressed="true"]{
+      background: rgba(124,58,237,.10);
+    }
+
+    .warnText{ color: var(--warn); font-size:13px; margin:8px 0 0; display:none; font-weight:800; }
+    .badText{ color: var(--bad);  font-size:13px; margin:8px 0 0; display:none; font-weight:800; }
+
+    .view{ display:none; }
+    .view.active{ display:block; }
+
+    /* Ficha */
+    #viewFicha .sheet{
+      overflow:hidden;
+      width:100%;
+      padding:0;
+    }
+    #viewFicha .sheetScroll{
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px;
+    }
+    #viewFicha .sheetScroll::-webkit-scrollbar{ height: 12px; }
+    #viewFicha .sheetScroll::-webkit-scrollbar-track{ background: rgba(124,58,237,.10); border-radius:999px; }
+    #viewFicha .sheetScroll::-webkit-scrollbar-thumb{ background: rgba(124,58,237,.55); border-radius:999px; border:2px solid rgba(255,255,255,.6); }
+
+    .sheetTop{
+      padding:12px 12px;
+      border-bottom: 2px solid rgba(124,58,237,.25);
+      background: linear-gradient(180deg, rgba(124,58,237,.06), #fff);
+    }
+    .sheetTop .title{
+      font-weight:950;
+      letter-spacing:.2px;
+      margin:0 0 4px;
+      text-transform: uppercase;
+      font-size:13px;
+      color:var(--text);
+    }
+    .sheetTop .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .sheetTable{
+      border-collapse:collapse;
+      font-size:13px;
+      min-width: 980px;
+      width: max(980px, 100%);
+    }
+    .sheetTable thead th{
+      background: rgba(124,58,237,.07);
+      color: var(--text);
+      font-weight:950;
+      text-transform: uppercase;
+      font-size:12px;
+      border-bottom: 2px solid rgba(124,58,237,.20);
+    }
+    .sheetTable .pctRow td{
+      color: var(--pm);
+      font-weight:950;
+      text-align:center;
+      background: rgba(124,58,237,.06);
+      border-bottom: 2px solid rgba(124,58,237,.15);
+    }
+    .sheetTable .dataRow td{
+      text-align:center;
+      font-variant-numeric: tabular-nums;
+      color:var(--text);
+    }
+    .sheetTable .nameCol{
+      text-align:left !important;
+      font-weight:950;
+      color:var(--text);
+    }
+    .sheetTable .facCol{
+      text-align:left !important;
+      color:var(--muted);
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .sheetTable .notaCol{
+      font-weight:950;
+      background: rgba(22,163,74,.10);
+      border-left: 2px solid rgba(22,163,74,.25);
+      color:var(--text);
+    }
+
+    /* KPI */
+    .kpi{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .big{
+      font-size:34px;
+      font-weight:950;
+      letter-spacing:-.8px;
+      margin:0;
+      line-height:1;
+      font-variant-numeric: tabular-nums;
+      color:var(--text);
+    }
+    .big span{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:900;
+      letter-spacing:0;
+      margin-left:6px;
+    }
+    .bar{
+      height:12px;
+      border-radius:999px;
+      background: rgba(124,58,237,.10);
+      overflow:hidden;
+      border: var(--bWidth) solid var(--pm);
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 3px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 7px) rgba(124,58,237,.10);
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      background-color: hsl(120, 70%, 45%);
+      transition: width .25s ease, background-color .25s ease;
+    }
+
+    footer{
+      max-width:1180px;
+      margin:0 auto;
+      padding: 0 16px 26px;
+      color: var(--muted);
+      font-size:12px;
+    }
+
+    /* quitar flechas number */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button{ -webkit-appearance: none; margin: 0; }
+    input[type=number]{ -moz-appearance: textfield; }
+
+    /* ICONOS SOCIALES */
+    .social-icons{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+    .social-icons a{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      border: var(--bWidth) solid var(--pm);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--pm);
+      text-decoration:none;
+      font-size:18px;
+      background:#fff;
+      box-shadow:
+        0 0 0 calc(var(--bHalo1) - 3px) rgba(124,58,237,.18),
+        0 0 0 calc(var(--bHalo2) - 7px) rgba(124,58,237,.10);
+      transition: all .2s ease;
+    }
+    .social-icons a:hover{
+      background: rgba(124,58,237,.07);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Identifica tu mejor Estrategia de Admisión a la UNAP</h1>
+    <p class="sub"></p>
+
+    <!-- HERO (arriba): foto + mensaje “suave” -->
+    <section class="hero pm-border" aria-label="presentación">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Descripción</span>
+        </div>
+        <p class="hero-title"> <h1> Herramienta para entender tu puntaje obtenido en los simulacros </h1></p>
+        <p class="hero-text">
+          Usala para entender tu resultado del simulacro según tus respuestas correctas dentro del Área a la que postulas. </p>
+          <p> <b>El talento amazonico debe apoyarse, </b>  <b>Hitler Vásquez</b> profesor universitario</p>
+              </div>
+
+      <div class="hero-right">
+        <!-- ✅ Reemplaza "foto.png" por tu archivo (ej: "DSC_0006.JPG.jpeg") y súbelo junto al index.html -->
+        <img src="foto.jpeg" alt="Foto de Hitler Vásquez" />
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <!-- 1) Panel principal -->
+    <section class="card pm-border">
+      <div class="hd">
+        <div class="row">
+          <div>
+            <label for="areaSel">Área de postulación</label><br>
+            <select id="areaSel">
+              <option value="A">Área A — Ciencias de la Vida y de la Salud</option>
+              <option value="B" selected>Área B — Ingeniería</option>
+              <option value="C">Área C — Ciencias de la Persona</option>
+              <option value="D">Área D — Ciencias Económicas</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="totalPts">Puntaje total del examen</label><br>
+            <input id="totalPts" type="number" min="1" value="1000" />
+          </div>
+
+          <div class="pill" title="Fórmula base">
+            <span class="legendDot"></span>
+            <span class="mono">punt/preg = (% × total) / #preguntas</span>
+          </div>
+        </div>
+
+        <span class="tag" id="areaTag">Área B</span>
+      </div>
+
+      <div class="bd">
+        <div class="grid2">
+          <div class="areaBox pm-border" id="areaAccent">
+            <div class="areaTitle">
+              <p class="areaName" id="areaName">Área B — Ingeniería</p>
+              <span class="tag">Carreras</span>
+            </div>
+            <div class="areaDesc" id="careers"></div>
+          </div>
+
+          <div class="areaBox pm-border">
+            <div class="areaTitle">
+              <p class="areaName">Cómo se calcula (con ejemplo)</p>
+              <span class="tag">Fórmula</span>
+            </div>
+            <div class="areaDesc" id="formulaBox"></div>
+          </div>
+        </div>
+
+        <div class="btns toggle" style="margin-top:14px;">
+          <button id="btnDidactico" aria-pressed="true">Detallado</button>
+          <button id="btnFicha" aria-pressed="false">Ver: Ficha horizontal</button>
+        </div>
+
+        <!-- Didáctico -->
+        <div id="viewDidactico" class="view active" style="margin-top:14px;">
+          <div class="pm-border" style="padding:10px; overflow:auto;">
+            <table id="tabla">
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th class="num"># Preg.</th>
+                  <th class="num">% (Área)</th>
+                  <th class="num">Puntos del componente</th>
+                  <th class="num">punt/preg</th>
+                  <th class="num">Correctas</th>
+                  <th class="num">Puntaje obtenido</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <th class="num" id="tPreg">100</th>
+                  <th class="num">100%</th>
+                  <th class="num" id="tCompPts">1000</th>
+                  <th class="num">—</th>
+                  <th class="num">—</th>
+                  <th class="num" id="tScore">0</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <p class="warnText" id="warnText">⚠️ Ajusté automáticamente valores porque excedían el máximo de preguntas del componente.</p>
+          <p class="badText" id="badText">⚠️ El total de porcentajes del área no suma 100%. Revisa la tabla de porcentajes.</p>
+
+          <div class="btns">
+            <button id="btnEjemplo">Cargar ejemplo (simulacro)</button>
+            <button id="btnReset">Reiniciar a 0</button>
+          </div>
+        </div>
+
+        <!-- Ficha -->
+        <div id="viewFicha" class="view" style="margin-top:14px;">
+          <div class="grid2">
+            <div class="areaBox pm-border">
+              <div class="areaTitle">
+                <p class="areaName">Datos del postulante (opcional)</p>
+                <span class="tag">Ficha</span>
+              </div>
+
+              <div class="row" style="gap:10px; align-items:flex-end;">
+                <div>
+                  <label for="facSelect">Carrera / Programa (según Área)</label><br>
+                  <select id="facSelect"></select>
+                </div>
+                <div>
+                  <label for="nameInput">Apellidos y nombres</label><br>
+                  <input id="nameInput" type="text" placeholder="Ej: Bardales Vásquez Alexia" />
+                </div>
+              </div>
+
+              <div class="areaDesc" style="margin-top:10px;">
+                Esta ficha muestra <b>%</b> por componente, tus <b>correctas</b> y la <b>nota final</b> calculada.
+              </div>
+            </div>
+
+            <div class="areaBox pm-border">
+              <div class="areaTitle">
+                <p class="areaName">Interpretación rápida</p>
+                <span class="tag">Didáctico</span>
+              </div>
+              <p class="areaDesc" style="margin:0;">
+                En cada área, los porcentajes cambian. Por eso, el <b>punt/preg</b> también cambia,
+                y el mismo número de correctas puede dar una nota distinta según el área.
+              </p>
+            </div>
+          </div>
+
+          <div class="sheet pm-border" style="margin-top:14px;">
+            <div class="sheetTop">
+              <p class="title" id="sheetTitle">ÁREA B: INGENIERÍA</p>
+              <p class="subtitle" id="sheetSubtitle"></p>
+            </div>
+
+            <div class="sheetScroll">
+              <table class="sheetTable">
+                <thead>
+                  <tr>
+                    <th style="min-width:220px;">Carrera / Programa</th>
+                    <th style="min-width:240px;">Apellidos y nombres</th>
+                    <th>Matemática</th>
+                    <th>Ciencias Sociales</th>
+                    <th>Ciencia y Tecn.</th>
+                    <th>Comunicación</th>
+                    <th>Inglés</th>
+                    <th class="notaCol">Nota</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="pctRow" id="pctRow"></tr>
+                  <tr class="dataRow" id="dataRow"></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="btns">
+            <button id="btnEjemplo2">Cargar ejemplo (ficha)</button>
+            <button id="btnReset2">Reiniciar a 0</button>
+          </div>
+        </div>
+
+        <p class="sub" style="margin-top:14px;">
+          Tip: sube este archivo como <span class="mono">index.html</span> a GitHub Pages y listo.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2) Resultados (abajo) -->
+    <section class="card pm-border">
+      <div class="hd">
+        <b>Resultado</b>
+        <span class="tag">Nivel de Progreso</span>
+      </div>
+
+      <div class="kpi">
+        <div>
+          <p class="big"><span id="scoreBig">0</span><span>/ <span id="totalBig">1000</span></span></p>
+          <p class="sub" style="margin:6px 0 0">Puntaje total calculado con tus correctas y el Área seleccionada.</p>
+        </div>
+
+        <div class="bar" aria-label="progreso">
+          <div class="fill" id="fill"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/hitlrvasquez" target="_blank" aria-label="Facebook" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://instagram.com/hitler_vasquez" target="_blank" aria-label="Instagram" rel="noopener">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://tiktok.com/@hitlr_vasquez" target="_blank" aria-label="TikTok" rel="noopener">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://wa.me/51956621492" target="_blank" aria-label="WhatsApp" rel="noopener">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const preguntas = { matematica:25, sociales:24, ctec:24, comunicacion:24, ingles:3 };
+
+    const porcentajes = {
+      A: { matematica:25, sociales:15, ctec:35, comunicacion:20, ingles:5 },
+      B: { matematica:40, sociales:15, ctec:20, comunicacion:20, ingles:5 },
+      C: { matematica:15, sociales:35, ctec:10, comunicacion:35, ingles:5 },
+      D: { matematica:30, sociales:20, ctec:15, comunicacion:30, ingles:5 }
+    };
+
+    const carrerasPorArea = {
+      A:["Acuicultura","Bromatología y Nutrición Humana","Ciencias Biológicas","Enfermería","Farmacia y Bioquímica","Medicina Humana","Odontología"],
+      B:["Agronomía","Arquitectura","Ingeniería Civil","Ingeniería de Sistemas e Informática","Ingeniería en Ecología de Bosques Tropicales","Ingeniería en Gestión Ambiental","Ingeniería Forestal","Ingeniería Química","Ingeniería en Industrias Alimentarias","Zootecnia"],
+      C:["Antropología Social","Derecho y Ciencias Políticas","Educación Física","Educación Inicial","Educación Primaria","Educación Secundaria — Ciencias Naturales","Educación Secundaria — Ciencias Sociales","Educación Secundaria — Filosofía y Psicopedagogía","Educación Secundaria — Idiomas Extranjeros (Inglés–Alemán)","Educación Secundaria — Idiomas Extranjeros (Inglés–Francés)","Educación Secundaria — Lengua y Literatura","Educación Secundaria — Matemática e Informática","Educación y Humanidades"],
+      D:["Administración","Contabilidad","Economía","Negocios Internacionales","Turismo"]
+    };
+
+    Object.keys(carrerasPorArea).forEach(area => {
+      carrerasPorArea[area].sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+    });
+
+    const areaInfo = {
+      A:{ name:"Área A — Ciencias de la Vida y de la Salud", short:"A — Salud", sheet:"ÁREA A: CIENCIA DE LA VIDA Y DE LA SALUD"},
+      B:{ name:"Área B — Ingeniería", short:"B — Ingeniería", sheet:"ÁREA B: INGENIERÍA"},
+      C:{ name:"Área C — Ciencias de la Persona", short:"C — Ciencias de la Persona", sheet:"ÁREA C: CIENCIAS DE LA PERSONA"},
+      D:{ name:"Área D — Ciencias Económicas", short:"D — Económicas", sheet:"ÁREA D: CIENCIAS ECONÓMICAS"}
+    };
+
+    const labels = { matematica:"Matemática", sociales:"Ciencias Sociales", ctec:"Ciencia y Tecnología", comunicacion:"Comunicación", ingles:"Inglés" };
+
+    function round(n, dec=2){ const p=Math.pow(10,dec); return Math.round((n+Number.EPSILON)*p)/p; }
+    function fmt(n, dec=2){ return round(n,dec).toLocaleString("es-PE",{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+    function fmt0(n){ return Math.round(n).toLocaleString("es-PE"); }
+    function escapeHtml(str){ return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;"); }
+
+    const areaSel = document.getElementById("areaSel");
+    const totalPts = document.getElementById("totalPts");
+
+    const tbody = document.querySelector("#tabla tbody");
+    const warnText = document.getElementById("warnText");
+    const badText  = document.getElementById("badText");
+
+    const areaTag = document.getElementById("areaTag");
+    const areaName = document.getElementById("areaName");
+    const careers = document.getElementById("careers");
+
+    const tPreg = document.getElementById("tPreg");
+    const tCompPts = document.getElementById("tCompPts");
+    const tScore = document.getElementById("tScore");
+
+    const scoreBig = document.getElementById("scoreBig");
+    const totalBig = document.getElementById("totalBig");
+    const fill = document.getElementById("fill");
+    const formulaBox = document.getElementById("formulaBox");
+
+    const sheetTitle = document.getElementById("sheetTitle");
+    const sheetSubtitle = document.getElementById("sheetSubtitle");
+    const pctRow = document.getElementById("pctRow");
+    const dataRow = document.getElementById("dataRow");
+    const facSelect = document.getElementById("facSelect");
+    const nameInput = document.getElementById("nameInput");
+
+    const btnDidactico = document.getElementById("btnDidactico");
+    const btnFicha = document.getElementById("btnFicha");
+    const viewDidactico = document.getElementById("viewDidactico");
+    const viewFicha = document.getElementById("viewFicha");
+
+    const correctasInputs = {};
+
+    function setView(which){
+      const did = which === "didactico";
+      viewDidactico.classList.toggle("active", did);
+      viewFicha.classList.toggle("active", !did);
+      btnDidactico.setAttribute("aria-pressed", did ? "true" : "false");
+      btnFicha.setAttribute("aria-pressed", !did ? "true" : "false");
+    }
+    btnDidactico.addEventListener("click", () => setView("didactico"));
+    btnFicha.addEventListener("click", () => setView("ficha"));
+
+    function renderCarrerasArea(area){
+      const arr = [...(carrerasPorArea[area] || [])]
+        .sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+
+      careers.innerHTML = arr
+        .map((c, i) => `${c}${(i === arr.length - 1) ? "." : ","}`)
+        .join("<br>");
+    }
+
+    function fillFacSelect(area){
+      const current = facSelect.value;
+      facSelect.innerHTML = "";
+
+      const opt0 = document.createElement("option");
+      opt0.value = "";
+      opt0.textContent = "Seleccione carrera / programa";
+      facSelect.appendChild(opt0);
+
+      const arr = carrerasPorArea[area] || [];
+      for(const c of arr){
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        facSelect.appendChild(opt);
+      }
+      facSelect.value = (arr.includes(current)) ? current : "";
+    }
+
+    function updateFormulaExample(){
+      const area = areaSel.value;
+      const total = Number(totalPts.value) || 1000;
+
+      const pct = porcentajes[area].matematica;
+      const compPts = (pct/100) * total;
+      const perQ = compPts / preguntas.matematica;
+      const corr = Number(correctasInputs.matematica?.value || 0);
+      const score = corr * perQ;
+
+      formulaBox.innerHTML = `
+        <b>Fórmula por componente</b><br>
+        1) <span class="mono">Puntos del componente = (%/100) × total</span><br>
+        2) <span class="mono">punt/preg = Puntos del componente / #preguntas</span><br>
+        3) <span class="mono">Puntaje obtenido = correctas × punt/preg</span><br><br>
+
+        <b>Ejemplo (Área ${area} — ${areaInfo[area].short}, Matemática)</b><br>
+        • % = ${pct}% y total = ${fmt0(total)} → <b>${fmt(compPts,0)}</b> puntos<br>
+        • #preguntas = ${preguntas.matematica} → <b>${fmt(perQ,2)}</b> puntos/preg<br>
+        • Si correctas = ${corr} → <b>${fmt(score,2)}</b> puntos
+      `;
+    }
+
+    function clampCorrectas(key){
+      const nPreg = preguntas[key];
+      let v = Number(correctasInputs[key]?.value ?? 0);
+      if(Number.isNaN(v)) v = 0;
+      if(v < 0) v = 0;
+      if(v > nPreg) v = nPreg;
+      return v;
+    }
+
+    function renderFicha(){
+      const area = areaSel.value;
+      const total = Number(totalPts.value) || 1000;
+
+      sheetTitle.textContent = areaInfo[area].sheet;
+      sheetSubtitle.textContent = `Distribución porcentual y nota calculada sobre ${fmt0(total)} puntos (según el Área seleccionada).`;
+
+      pctRow.innerHTML = `
+        <td class="facCol"></td>
+        <td class="nameCol"></td>
+        <td>${porcentajes[area].matematica}%</td>
+        <td>${porcentajes[area].sociales}%</td>
+        <td>${porcentajes[area].ctec}%</td>
+        <td>${porcentajes[area].comunicacion}%</td>
+        <td>${porcentajes[area].ingles}%</td>
+        <td class="notaCol"></td>
+      `;
+
+      const carrera = facSelect.value || "—";
+      const name = nameInput.value || "—";
+
+      const corr = {
+        matematica: clampCorrectas("matematica"),
+        sociales: clampCorrectas("sociales"),
+        ctec: clampCorrectas("ctec"),
+        comunicacion: clampCorrectas("comunicacion"),
+        ingles: clampCorrectas("ingles")
+      };
+
+      let totalScore = 0;
+      for(const key of Object.keys(preguntas)){
+        const pct = porcentajes[area][key];
+        const compPts = (pct/100) * total;
+        const perQ = compPts / preguntas[key];
+        totalScore += (corr[key] * perQ);
+      }
+
+      dataRow.innerHTML = `
+        <td class="facCol">${escapeHtml(carrera)}</td>
+        <td class="nameCol">${escapeHtml(name)}</td>
+        <td>${corr.matematica}</td>
+        <td>${corr.sociales}</td>
+        <td>${corr.ctec}</td>
+        <td>${corr.comunicacion}</td>
+        <td>${corr.ingles}</td>
+        <td class="notaCol">${fmt(totalScore, 6)}</td>
+      `;
+    }
+
+    function recalc(){
+      const area = areaSel.value;
+      const total = Number(totalPts.value) || 1000;
+
+      let hadClamp = false;
+      let sumScore = 0;
+
+      for(const key of Object.keys(preguntas)){
+        const nPreg = preguntas[key];
+        const pct = porcentajes[area][key];
+        const compPts = (pct/100) * total;
+        const perQ = compPts / nPreg;
+
+        let correctas = Number(correctasInputs[key].value);
+        if(Number.isNaN(correctas)) correctas = 0;
+
+        if(correctas < 0){ correctas = 0; hadClamp = true; }
+        if(correctas > nPreg){ correctas = nPreg; hadClamp = true; }
+        if(correctasInputs[key].value !== String(correctas)){
+          correctasInputs[key].value = String(correctas);
+        }
+
+        const score = correctas * perQ;
+        sumScore += score;
+
+        const cell = document.getElementById(`score_${key}`);
+        if(cell) cell.textContent = fmt(score, 2);
+      }
+
+      warnText.style.display = hadClamp ? "block" : "none";
+      tScore.textContent = fmt(sumScore, 2);
+      scoreBig.textContent = fmt0(sumScore);
+      totalBig.textContent = fmt0(total);
+
+      const pctFill = Math.max(0, Math.min(100, (sumScore/total)*100));
+      fill.style.width = pctFill.toFixed(1) + "%";
+
+      updateFormulaExample();
+      renderFicha();
+    }
+
+    function buildTable(){
+      tbody.innerHTML = "";
+      const area = areaSel.value;
+      const total = Number(totalPts.value) || 1000;
+
+      areaTag.textContent = "Área " + area;
+      areaName.textContent = areaInfo[area].name;
+
+      renderCarrerasArea(area);
+      fillFacSelect(area);
+
+      const totalPreg = Object.values(preguntas).reduce((a,b)=>a+b,0);
+      tPreg.textContent = totalPreg;
+      tCompPts.textContent = fmt0(total);
+
+      const sumPct = Object.values(porcentajes[area]).reduce((a,b)=>a+b,0);
+      badText.style.display = (sumPct !== 100) ? "block" : "none";
+
+      for(const key of Object.keys(preguntas)){
+        const tr = document.createElement("tr");
+        const nPreg = preguntas[key];
+        const pct = porcentajes[area][key];
+        const compPts = (pct/100) * total;
+        const perQ = compPts / nPreg;
+
+        tr.innerHTML = `
+          <td><b>${labels[key]}</b></td>
+          <td class="num">${nPreg}</td>
+          <td class="num">${pct}%</td>
+          <td class="num">${fmt(compPts, 2)}</td>
+          <td class="num"><b>${fmt(perQ, 4)}</b></td>
+          <td class="num"></td>
+          <td class="num"><span class="mono" id="score_${key}">0.00</span></td>
+        `;
+
+        const tdInput = tr.children[5];
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = "0";
+        input.max = String(nPreg);
+        input.value = correctasInputs[key]?.value ?? "0";
+        input.style.width = "120px";
+        input.addEventListener("input", () => recalc());
+
+        tdInput.appendChild(input);
+        correctasInputs[key] = input;
+        tbody.appendChild(tr);
+      }
+
+      updateFormulaExample();
+      renderFicha();
+      recalc();
+    }
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      for(const k of Object.keys(correctasInputs)) correctasInputs[k].value = "0";
+      recalc();
+    });
+    document.getElementById("btnReset2").addEventListener("click", () => {
+      for(const k of Object.keys(correctasInputs)) correctasInputs[k].value = "0";
+      recalc();
+    });
+
+    function loadDemo(){
+      const demo = { matematica: 14, sociales: 12, ctec: 13, comunicacion: 15, ingles: 2 };
+      for(const k of Object.keys(correctasInputs)){
+        correctasInputs[k].value = String(demo[k] ?? 0);
+      }
+      recalc();
+    }
+    document.getElementById("btnEjemplo").addEventListener("click", loadDemo);
+
+    document.getElementById("btnEjemplo2").addEventListener("click", () => {
+      if(!facSelect.value){
+        const area = areaSel.value;
+        const first = (carrerasPorArea[area] || [])[0];
+        if(first) facSelect.value = first;
+      }
+      if(!nameInput.value) nameInput.value = "APELLIDOS Y NOMBRES";
+      loadDemo();
+      setView("ficha");
+    });
+
+    facSelect.addEventListener("change", renderFicha);
+    nameInput.addEventListener("input", renderFicha);
+
+    areaSel.addEventListener("change", buildTable);
+    totalPts.addEventListener("input", buildTable);
+
+    buildTable();
+    setView("didactico");
+  </script>
+</body>
+</html>
